@@ -12,11 +12,6 @@ use PHPUnit\Framework\Assert;
 /**
  * Wrapper for basic shell commands and shell output
  *
- * ## Responsibility
- * * Maintainer: **davert**
- * * Status: **stable**
- * * Contact: codecept@davert.mail.ua
- *
  * *Please review the code of non-stable modules and provide patches if you have issues.*
  */
 class Cli extends Module
@@ -89,7 +84,7 @@ class Cli extends Module
     }
 
     /**
-     * Returns the output from latest command
+     * Returns the shell output of the latest command
      */
     public function grabShellOutput(): string
     {
@@ -97,28 +92,44 @@ class Cli extends Module
     }
 
     /**
-     * Checks result code. To verify a result code > 0, you need to pass `false` as second argument to `runShellCommand()`
+     * Checks the exit code of the latest command. To verify a result code >0, you need to pass `false` as second argument to `runShellCommand()`
      *
      * ```php
      * <?php
-     * $I->seeResultCodeIs(0);
+     * $I->seeExitCodeIs(0);
      * ```
      */
-    public function seeResultCodeIs(int $code): void
+    public function seeExitCodeIs(int $code): void
     {
         $this->assertEquals($this->result, $code, "result code is {$code}");
     }
 
     /**
-     * Checks result code
+     * Checks the exit code of the latest command.
      *
      * ```php
      * <?php
-     * $I->seeResultCodeIsNot(0);
+     * $I->seeExitCodeIsNot(0);
      * ```
+     */
+    public function seeExitCodeIsNot(int $code): void
+    {
+        $this->assertNotEquals($this->result, $code, "result code is {$code}");
+    }
+
+    /**
+     * @deprecated Use `seeExitCodeIs()` instead
+     */
+    public function seeResultCodeIs(int $code): void
+    {
+        $this->seeExitCodeIs($code);
+    }
+
+    /**
+     * @deprecated Use `seeExitCodeIsNot()` instead
      */
     public function seeResultCodeIsNot(int $code): void
     {
-        $this->assertNotEquals($this->result, $code, "result code is {$code}");
+        $this->seeExitCodeIsNot($code);
     }
 }
