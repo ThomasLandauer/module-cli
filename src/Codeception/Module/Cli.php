@@ -106,7 +106,7 @@ class Cli extends Module
      */
     public function seeResultCodeIs(int $code): void
     {
-        $this->assertEquals($this->result, $code, "result code is {$code}");
+        $this->assertEquals($code, $this->result, "result code is {$this->result}");
     }
 
     /**
@@ -119,6 +119,6 @@ class Cli extends Module
      */
     public function seeResultCodeIsNot(int $code): void
     {
-        $this->assertNotEquals($this->result, $code, "result code is {$code}");
+        $this->assertNotEquals($code, $this->result, "result code is {$this->result}");
     }
 }
